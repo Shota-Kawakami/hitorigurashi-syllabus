@@ -1,0 +1,957 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>一人暮らし ヒアリングシート</title>
+<meta name="description" content="答えていくと、親に見せるシラバスの下書きと、次にやることリストができあがります。">
+<style>
+:root{
+  --bg:#fbfaf7; --panel:#ffffff; --fg:#15202b; --muted:#5d6b7a;
+  --line:#e2ded6; --accent:#1f5f6b; --accent-soft:#e6f0f1;
+  --warm:#b4651b; --warm-soft:#fbf0e4; --ok:#2d6a4f; --ok-soft:#e5f1ea;
+  --shadow:0 1px 2px rgba(20,32,43,.06), 0 8px 24px rgba(20,32,43,.06);
+  --radius:14px;
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --bg:#13171b; --panel:#1b2026; --fg:#e8e6e1; --muted:#9aa5b1;
+    --line:#2d343c; --accent:#6fb5c0; --accent-soft:#1d2c30;
+    --warm:#e0a062; --warm-soft:#2b2219; --ok:#7cc4a0; --ok-soft:#1b2a23;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#13171b; --panel:#1b2026; --fg:#e8e6e1; --muted:#9aa5b1;
+  --line:#2d343c; --accent:#6fb5c0; --accent-soft:#1d2c30;
+  --warm:#e0a062; --warm-soft:#2b2219; --ok:#7cc4a0; --ok-soft:#1b2a23;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--fg);
+  font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",Meiryo,system-ui,sans-serif;
+  font-size:16px; line-height:1.85; letter-spacing:.01em;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 96px}
+
+/* header */
+header.top{
+  position:sticky; top:0; z-index:20; background:var(--bg);
+  border-bottom:1px solid var(--line); padding:10px 0 0;
+}
+.top-in{max-width:720px;margin:0 auto;padding:0 16px}
+.top-row{display:flex;align-items:center;gap:12px;justify-content:space-between}
+.brand{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.04em}
+.step-label{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{height:4px;background:var(--line);border-radius:99px;overflow:hidden;margin:8px 0 0}
+.bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .35s ease}
+
+/* cards */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 20px;margin:20px 0}
+h1{font-size:25px;line-height:1.45;margin:0 0 10px;letter-spacing:.01em}
+h2{font-size:20px;line-height:1.5;margin:0 0 4px}
+h3{font-size:16px;margin:26px 0 10px}
+p{margin:0 0 14px}
+.lead{color:var(--muted);font-size:14.5px;margin:0 0 18px}
+.tag{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.06em;
+  background:var(--accent-soft);color:var(--accent);padding:3px 9px;border-radius:99px;margin:0 0 12px}
+.tag.warm{background:var(--warm-soft);color:var(--warm)}
+
+/* questions */
+.q{margin:0 0 30px}
+.q:last-child{margin-bottom:6px}
+.q-no{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.08em}
+.q-text{font-size:16.5px;font-weight:700;line-height:1.7;margin:2px 0 6px}
+.q-hint{font-size:13.5px;color:var(--muted);line-height:1.75;margin:0 0 10px;white-space:pre-line}
+textarea,input[type=text]{
+  width:100%;font:inherit;font-size:16px;color:var(--fg);background:var(--bg);
+  border:1px solid var(--line);border-radius:10px;padding:11px 12px;resize:vertical;
+}
+textarea:focus,input[type=text]:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.sub{display:grid;gap:8px}
+.sub label{display:grid;grid-template-columns:7.5em 1fr;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
+@media(max-width:460px){.sub label{grid-template-columns:1fr;gap:3px}}
+.count{font-size:12px;color:var(--muted);text-align:right;margin-top:4px;font-variant-numeric:tabular-nums}
+.count.warn{color:var(--warm);font-weight:700}
+
+/* scale */
+.scale{display:flex;gap:5px;flex-wrap:wrap;margin:4px 0 6px}
+.scale button{
+  flex:1 1 auto;min-width:40px;font:inherit;font-size:15px;font-weight:700;
+  padding:11px 0;border:1px solid var(--line);background:var(--panel);color:var(--muted);
+  border-radius:9px;cursor:pointer;transition:.15s
+}
+.scale button:hover{border-color:var(--accent);color:var(--accent)}
+.scale button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.scale-ends{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:10px}
+
+/* nav */
+.nav{display:flex;gap:10px;margin:22px 0 0;align-items:center}
+button.btn{
+  font:inherit;font-weight:700;font-size:15.5px;padding:13px 22px;border-radius:11px;
+  border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;transition:.15s
+}
+button.btn:hover{filter:brightness(1.08)}
+button.btn.ghost{background:transparent;color:var(--accent)}
+button.btn.sm{font-size:13.5px;padding:9px 15px}
+.nav .spacer{flex:1}
+.save-note{font-size:12px;color:var(--muted);text-align:center;margin:16px 0 0}
+
+/* result */
+.action{display:flex;gap:11px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+.action:last-child{border-bottom:none}
+.action input{margin:5px 0 0;width:19px;height:19px;flex:none;accent-color:var(--accent)}
+.action .body{flex:1;min-width:0}
+.action .t{font-weight:700;font-size:15.5px;line-height:1.65}
+.action .w{font-size:13.5px;color:var(--muted);line-height:1.7;margin-top:3px}
+.action.done .t,.action.done .w{opacity:.45;text-decoration:line-through}
+.who{display:inline-block;font-size:11px;font-weight:700;padding:2px 7px;border-radius:5px;margin-left:6px;vertical-align:1px}
+.who.me{background:var(--accent-soft);color:var(--accent)}
+.who.sk{background:var(--warm-soft);color:var(--warm)}
+.echo{background:var(--accent-soft);border-radius:10px;padding:14px 16px;margin:0 0 14px;font-size:14.5px;line-height:1.8}
+.echo b{display:block;font-size:12px;letter-spacing:.05em;color:var(--accent);margin-bottom:4px}
+pre.out{
+  background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.75;
+  white-space:pre-wrap;word-break:break-word;max-height:380px;overflow:auto;margin:0 0 12px
+}
+.row{display:flex;gap:9px;flex-wrap:wrap}
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);opacity:0;pointer-events:none;
+  background:var(--fg);color:var(--bg);padding:11px 20px;border-radius:99px;font-size:14px;font-weight:700;
+  transition:.25s;z-index:50
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.theme{background:none;border:none;color:var(--muted);cursor:pointer;font-size:17px;padding:4px;line-height:1}
+ul.plain{margin:0;padding-left:1.2em}
+ul.plain li{margin-bottom:7px}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="top-row">
+      <span class="brand">一人暮らし ヒアリングシート</span>
+      <span style="display:flex;align-items:center;gap:10px">
+        <span class="step-label" id="stepLabel"></span>
+        <button class="theme" id="themeBtn" title="表示を切り替える" aria-label="表示を切り替える">◐</button>
+      </span>
+    </div>
+    <div class="bar"><i id="bar"></i></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <main id="app"></main>
+</div>
+<div class="toast" id="toast"></div>
+<style>
+.res{background:var(--warm-soft);border:1px solid color-mix(in srgb, var(--warm) 25%, transparent);
+  border-radius:10px;padding:13px 15px;margin:10px 0 0;font-size:13.5px;line-height:1.8}
+.res .rh{font-weight:700;color:var(--warm);font-size:12px;letter-spacing:.06em;margin-bottom:6px}
+.res dl{margin:0;display:grid;grid-template-columns:5.5em 1fr;gap:3px 10px}
+@media(max-width:460px){.res dl{grid-template-columns:1fr;gap:0 0}
+  .res dt{margin-top:7px}}
+.res dt{font-weight:700;color:var(--muted);font-size:12.5px}
+.res dd{margin:0}
+.res a{color:var(--warm);word-break:break-all}
+.res .trap{margin-top:8px;padding-top:8px;border-top:1px dashed color-mix(in srgb, var(--warm) 30%, transparent)}
+.res .trap b{color:var(--warm)}
+.srcline{display:grid;grid-template-columns:1fr 8.5em;gap:8px;margin-top:8px}
+@media(max-width:460px){.srcline{grid-template-columns:1fr}}
+.srcline input{font-size:14px;padding:8px 10px}
+.money{display:grid;grid-template-columns:1fr 6em;gap:8px;align-items:center}
+.money .unit{font-size:14px;color:var(--muted)}
+input[type=number]{width:100%;font:inherit;font-size:16px;color:var(--fg);background:var(--bg);
+  border:1px solid var(--line);border-radius:10px;padding:11px 12px;text-align:right;font-variant-numeric:tabular-nums}
+input[type=number]:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+table.calc{width:100%;border-collapse:collapse;font-size:14.5px;margin:0 0 14px}
+table.calc th,table.calc td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left}
+table.calc td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.calc tr.total td{font-weight:800;border-top:2px solid var(--fg);border-bottom:none;font-size:16px}
+table.calc tr.sub td{color:var(--muted)}
+.flag{border-left:3px solid var(--warm);background:var(--warm-soft);padding:11px 14px;border-radius:0 9px 9px 0;margin:0 0 11px;font-size:14px;line-height:1.75}
+.flag.ok{border-color:var(--ok);background:var(--ok-soft)}
+.flag b{display:block;margin-bottom:2px}
+.prio{font-size:11px;font-weight:800;letter-spacing:.05em;padding:2px 7px;border-radius:5px;margin-right:7px;vertical-align:1px}
+.prio.now{background:#c0392b;color:#fff}
+.prio.wk{background:var(--warm-soft);color:var(--warm)}
+.prio.lt{background:var(--accent-soft);color:var(--accent)}
+details.more{margin:14px 0 0;font-size:14px}
+details.more summary{cursor:pointer;font-weight:700;color:var(--accent);font-size:14px}
+details.more > div{padding:10px 0 0;line-height:1.8}
+</style>
+
+<script>
+"use strict";
+const KEY = "hitorigurashi-hearing-v1";
+const FEE_URL = "https://admission.ritsumei.ac.jp/about/fee/";
+const CHECKED_ON = "2026年10月27日";
+
+/* 2027年度入学者の確定額（立命館大学 学費・奨学金ページで確認・2026-10-27）
+   他学部は数字を断定せず、必ず公式ページで確認させる */
+const TUITION = {
+  "経営学部 経営学科":      { enroll:200000, year:1147200 },
+  "経営学部 国際経営学科":  { enroll:200000, year:1286600 }
+};
+
+const yen = n => (n==null||isNaN(n)) ? "—" : Math.round(n).toLocaleString("ja-JP") + "円";
+const man = n => (n==null||isNaN(n)) ? "—" : (Math.round(n/1000)/10).toLocaleString("ja-JP") + "万円";
+
+/* ---------------- 設問 ---------------- */
+const SECTIONS = [
+{
+  id:"a", title:"想いのたしかめ", field:"シラバスの 概要・目的・到達目標 の土台",
+  lead:"ここが一番大事です。費用や計画は調べれば出てきますが、ここだけは本人にしか書けません。ここが薄いと、どれだけ数字をそろえても『借りてきた計画』に見えて、親には伝わりません。きれいな言葉より、本音を。",
+  qs:[
+    { id:"a1", type:"scale", q:"今、一人暮らしをしたい気持ちは10点満点で何点ですか？",
+      hint:"正直に。10にしなくていいです。" },
+    { id:"a1b", type:"long", rows:3, deep:40,
+      q:"なぜその点数ですか？ そして、なぜ「それより1点低く」ないのですか？",
+      hint:"低い方の理由ではなく、その点数を支えている理由を書きます。ここに出てくる言葉が、シラバスの「概要」で一番効きます。",
+      ph:"例：8点。9じゃないのは少し不安もあるから。でも7じゃないのは、…" },
+    { id:"a2", type:"long", rows:5, deep:80,
+      q:"一人暮らしを始めて1か月たった、ふつうの平日。朝起きてから夜寝るまで、どんな1日を過ごしていますか？",
+      hint:"頭の中の映像をそのまま書いてください。何時に起きて、どこで何をして、誰と会って、夜は何をしているか。\nここが具体的に書ける人は、本当にやりたい人です。ふわっとしか書けないなら、そこが弱点です。",
+      ph:"例：7時に起きて、自分で作った朝ごはんを食べて、歩いて大学に行く。1限のあとは…" },
+    { id:"a3", type:"long", rows:4, deep:50,
+      q:"「一人暮らししたい」と最初に思ったのは、いつ、何があったときですか？",
+      hint:"きっかけになった出来事を1つ。人から聞いた話でも、自分が経験したことでもいいです。親に話すとき、理屈より効くのはこれです。",
+      ph:"例：去年の文化祭の準備で遅くなったとき、…" },
+    { id:"a4", type:"long", rows:4, deep:50,
+      q:"実家から通う4年間を想像してみてください。一番もったいない、嫌だと思うのはどんなことですか？",
+      hint:"「通学がしんどい」の一段下まで。その時間で何ができなくなるのかを書きます。シラバスの「目的」になります。",
+      ph:"例：夜のイベントに出られないこと。…" },
+    { id:"a5", type:"long", rows:4,
+      q:"逆に、「一人暮らしはやめておいた方がいい理由」を自分で挙げるとしたら？",
+      hint:"自分で反論を書けるかどうかが、本気度の証明になります。ここを親より先に言えると、話の主導権がこちらに来ます。空欄なら面談で一緒に考えます。",
+      ph:"例：お金がかかる。生活が乱れるかもしれない。…" },
+    { id:"a6", type:"long", rows:4, deep:40,
+      q:"4年後、親に何と言われたら「やってよかった」と思えますか？",
+      hint:"そのセリフを、できればカギカッコで書いてください。シラバスの「到達目標」は、この言葉から逆算して作ります。",
+      ph:"例：「行かせてよかった」…" }
+  ]
+},
+{
+  id:"b", title:"通学のこと", field:"シラバスの 目的",
+  lead:"「実家から通えるでしょ」への答えを、数字で作ります。感覚ではなく、調べた数字で。",
+  qs:[
+    { id:"b1", type:"group", q:"実家の最寄り駅から、大阪いばらきキャンパス（OIC）まで",
+      fields:[
+        {k:"eki", label:"最寄り駅", ph:"例：〇〇駅"},
+        {k:"min", label:"片道（分）", ph:"例：75", num:true},
+        {k:"nori", label:"乗り換え", ph:"例：2回"},
+        {k:"teiki", label:"定期代（月）", ph:"例：12000", num:true}
+      ],
+      src:true,
+      research:{
+        what:"ドア・トゥ・ドアの片道時間（分）と、6か月定期の月あたり金額",
+        where:[{t:"Googleマップで「自宅最寄り駅 → 南茨木駅」を平日8時着で検索", u:"https://www.google.com/maps/dir/"},
+               {t:"ジョルダン／Yahoo!乗換案内で定期代（6か月）を出す", u:"https://transit.yahoo.co.jp/"}],
+        check:"OICの最寄りは阪急「南茨木」またはJR「茨木」。駅から大学まで徒歩5〜10分かかるので、それも足す",
+        trap:"電車に乗っている時間だけを書かないこと。家から駅までと、駅から教室までを入れると、たいてい15〜25分増える。親は実感で知っているので、短く見積もると一発で信用を失う"
+      } },
+    { id:"b2", type:"long", rows:4, deep:40,
+      q:"実家から通うと、具体的に何ができなくなりますか？",
+      hint:"1限、サークル、バイト、夜の活動、課題の時間。a4で書いたことと重なってOKです。ここは時間の話に寄せます。" }
+  ]
+},
+{
+  id:"c", title:"大学で学ぶこと", field:"シラバスの 到達目標",
+  lead:"ここが埋まっていないと、一人暮らしは「遊びたいだけ」に見えます。学部の中身は公式サイトで必ず裏を取ります。",
+  qs:[
+    { id:"c1", type:"short", q:"進学する学部・学科は？",
+      hint:"次の費用計算で使うので、学科まで書いてください。例：経営学部 経営学科",
+      ph:"例：経営学部 経営学科" },
+    { id:"c2", type:"long", rows:4, deep:40,
+      q:"なぜその学部ですか？",
+      hint:"「なんとなく」でも、その「なんとなく」の中身を書き出します。" },
+    { id:"c3", type:"long", rows:4,
+      q:"気になっている授業・ゼミ・プログラムの名前を、3つ書いてください。",
+      hint:"固有名詞で。ここが書けると、親の見る目が変わります。調べ方は下にあります。",
+      ph:"例：〇〇ゼミ、△△プログラム、…",
+      research:{
+        what:"実在する授業名・ゼミ名・留学/インターンのプログラム名を3つ",
+        where:[{t:"立命館大学 経営学部の公式サイト（カリキュラム・ゼミ紹介）", u:"https://www.ritsumei.ac.jp/ba/"},
+               {t:"立命館大学 シラバス検索（実際の授業の内容が読める）", u:"https://www.ritsumei.ac.jp/pathways-future/curriculum/"}],
+        check:"3つのうち1つは「1回生で取れるもの」にする。4年後の話だけだと、来年から何をするのかが見えない",
+        trap:"パンフレットの見出しをそのまま写さない。授業名だけでなく「何をする授業か」を一言添えられる状態にしておく。親に聞かれて答えられないと逆効果"
+      } },
+    { id:"c4", type:"long", rows:4, deep:50,
+      q:"卒業するとき、どうなっていたいですか？",
+      hint:"a6で書いた「言われたい言葉」と、つながっていますか。仕事、身につけたい力、どんな人になっているか。" }
+  ]
+},
+{
+  id:"d", title:"4年間の計画", field:"シラバスの 授業計画",
+  lead:"1回生は具体的に、2回生以降は方向性だけ。4年分を細かく書くと、かえって嘘っぽくなります。",
+  qs:[
+    { id:"d1", type:"long", rows:5, deep:60,
+      q:"1回生の1年間でやることを、できるだけ具体的に。",
+      hint:"サークル名、資格名、バイトの種類、留学の準備など。固有名詞と時期を入れます。前期と後期に分けて書けるとなおよいです。" },
+    { id:"d2", type:"long", rows:4,
+      q:"2回生以降にやってみたいことは？（方向性だけでOK）",
+      hint:"長く書きすぎないこと。ここは短い方が信用されます。" }
+  ]
+},
+{
+  id:"e", title:"お金のこと", field:"シラバスの 費用",
+  lead:"親が実際に判断するのは「一人暮らしで増える分（差額）」だけです。学費は実家から通ってもかかるので、判断材料ではありません。ここは全部、出典のある数字で埋めます。推測で書いた数字は、親に1回崩されたらそのあとが全部疑われます。",
+  qs:[
+    { id:"e1", type:"money", q:"学費（授業料）は年いくらですか？", unit:"円 / 年", src:true,
+      hint:"入学金は含めず、授業料の年額です。上で書いた学科を選べば、下に確認済みの数字が出ます。",
+      research:{
+        what:"2027年度入学者の、学科別の授業料（年額）と入学金",
+        where:[{t:"立命館大学 学費・奨学金（2027年度入学者に適用される額が載っています）", u:"https://admission.ritsumei.ac.jp/about/fee/"}],
+        check:"経営学部 経営学科は年1,147,200円＋入学金200,000円、国際経営学科は年1,286,600円＋入学金200,000円（2026年10月27日に公式ページで確認）。立命館は「一定方式」で、入学から卒業まで原則同額です",
+        trap:"公式ページの「1回生 年間計」をそのまま4倍しないこと。1回生の数字には入学金20万円が入っているので、4倍すると60万円も多く出ます。正しくは〈授業料×4＋入学金〉。親の前でこの計算を間違えると、他の数字も全部疑われます"
+      } },
+    { id:"e2", type:"money", q:"諸会費は4年間でいくらですか？", unit:"円 / 4年", optional:true,
+      hint:"学友会費・学会費・父母教育後援会費・校友会費など。学費とは別に必ずかかります。",
+      research:{
+        what:"学部ごとの諸会費の合計（4年分）",
+        where:[{t:"同じ学費ページの下の方に「諸会費」の表があります", u:"https://admission.ritsumei.ac.jp/about/fee/"}],
+        check:"経営学部の場合、学友会（入会金3,000円＋年会費5,000円）、学会費（年7,000円）、父母教育後援会（入会金5,000円＋年会費10,000円）、校友会費30,000円＋学部校友会費10,000円は4回生時のみ。合計で10万円前後になります",
+        trap:"ここを忘れると、親が自分で調べたときに「抜けてるじゃないか」となる。金額は小さくても、抜けを見つけられると資料全体の信用が落ちます"
+      } },
+    { id:"e3", type:"money", q:"家賃は月いくらを上限にしますか？", unit:"円 / 月", src:true,
+      hint:"相場を見たうえで、自分で上限を決めます。",
+      research:{
+        what:"南茨木・茨木市駅あたりの1K・1Rの家賃相場と、自分が住みたい条件での実勢価格",
+        where:[{t:"SUUMOで「南茨木駅」1K・1R、徒歩15分以内で検索して、10件の家賃を見る", u:"https://suumo.jp/chintai/osaka/ensen/"},
+               {t:"立命館生協の住まい紹介（学生向け物件・保証会社の条件が分かる）", u:"https://www.ritsco-op.jp/"}],
+        check:"ニフティ不動産の集計では、茨木市駅周辺の1Kの平均が5.5万円、南茨木が5.56万円（2026年8月時点）。学生向けなら4.5〜6万円が現実的な幅。7万円を超えるなら理由の説明が要ります",
+        trap:"家賃だけ見ないこと。管理費・共益費が月3,000〜8,000円、更新料が2年ごとに家賃1か月分かかることがある。募集サイトの「賃料」は管理費を含まない表示が多いので、必ず合計で見る"
+      } },
+    { id:"e4", type:"money", q:"初期費用はいくら見ますか？", unit:"円 / 1回だけ", src:true,
+      hint:"敷金・礼金・仲介手数料・前家賃・火災保険・保証会社・引っ越し・家具家電。",
+      research:{
+        what:"実際に気になった物件1件で、初期費用の内訳を出してもらった金額",
+        where:[{t:"SUUMOの物件ページに「敷金/礼金」の記載があります。そこから概算する", u:"https://suumo.jp/chintai/"},
+               {t:"生協や不動産会社に「初期費用の見積もり」をもらうのが一番正確", u:"https://www.ritsco-op.jp/"}],
+        check:"目安は家賃の4〜6か月分＋家具家電。家賃5万円なら、契約まわりで20〜30万円、家具家電で10〜15万円、合計30〜45万円。これより大幅に安い見積もりは、何かが抜けています",
+        trap:"家具家電を0円で計算しないこと。冷蔵庫・洗濯機・電子レンジ・ベッド・カーテン・照明で、新品なら10万円は超える。中古やお下がりで抑えるなら、どれをどうするかまで書くと説得力が出ます"
+      } },
+    { id:"e5", type:"money", q:"水道光熱費は月いくら？", unit:"円 / 月", optional:true,
+      hint:"電気・ガス・水道の合計。",
+      research:{
+        what:"学生の一人暮らしの平均",
+        where:[{t:"全国大学生活協同組合連合会「学生の消費生活に関する実態調査」（下宿生の生活費の内訳が年ごとに出ています）", u:"https://www.univcoop.or.jp/press/life/report.html"}],
+        check:"一人暮らしの学生で月7,000〜12,000円が一般的な幅。夏と冬は上がります",
+        trap:"実家の光熱費を人数で割って出さないこと。一人暮らしは基本料金の比率が高いので、割り算では安く出すぎます"
+      } },
+    { id:"e6", type:"money", q:"食費は月いくら？", unit:"円 / 月", optional:true,
+      hint:"自炊する前提か、しない前提かで大きく変わります。",
+      research:{ what:"自分の生活での現実的な額",
+        where:[{t:"全国大学生協連の実態調査（下宿生の食費の平均）", u:"https://www.univcoop.or.jp/press/life/report.html"}],
+        check:"自炊中心で月25,000〜30,000円、外食が多いと40,000円を超えます",
+        trap:"ここを低く見積もるのが一番よくある失敗。月2万円で計算して親に「本当にできるの」と言われると、全部崩れます。むしろ少し多めに書いて、浮いたら報告する方が信用されます" } },
+    { id:"e7", type:"money", q:"通信費（スマホ・ネット）は月いくら？", unit:"円 / 月", optional:true,
+      hint:"家のWi-Fi代と、スマホ代のうち自分で払う分。家賃に込みの物件もあります。" },
+    { id:"e8", type:"money", q:"実家にいても自分で払っている・親が出している分（食費など）はありますか？", unit:"円 / 月", optional:true,
+      hint:"実家にいても食費や通信費はかかっています。その分は「増える額」から引けます。ここを出せると、差額が小さくなって交渉が有利になります。" },
+    { id:"e9", type:"money", q:"バイトで月いくら稼ぐつもりですか？", unit:"円 / 月", optional:true,
+      hint:"下の注意を読んでから金額を決めてください。",
+      research:{
+        what:"現実的に、授業と両立できる範囲の月収",
+        where:[{t:"時給×シフトで計算する。大阪府の最低賃金は毎年10月に改定されるので、最新額を確認", u:"https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/roudoukijun/minimumichiran/"}],
+        check:"週3日・1日4時間・時給1,100円なら、月およそ5.3万円。これが普通のライン",
+        trap:"月8万円以上を書くと、あとで出てくるGPAの約束と矛盾します。親は必ずそこを突きます。『勉強も頑張るしバイトもたくさんやる』は、大人には一番信用されない組み合わせです。稼ぐならシフトの上限も一緒に書くこと"
+      } },
+    { id:"e10", type:"money", q:"奨学金は月いくら受け取る見込みですか？", unit:"円 / 月", optional:true,
+      hint:"まだ分からなければ0のままで。下の内容は今すぐ確認が必要です。",
+      research:{
+        what:"2027年4月入学で、今からまだ間に合う奨学金はどれか",
+        where:[{t:"まず高校の事務室・進路指導室に聞く（予約採用の追加申込があるかどうか）", u:""},
+               {t:"日本学生支援機構（JASSO）奨学金の案内", u:"https://www.jasso.go.jp/shogakukin/"},
+               {t:"立命館大学の奨学金（大学独自のものが複数あります）", u:"https://www.ritsumei.ac.jp/profile/scholarship/"}],
+        check:"JASSOの予約採用は、高校3年の春から夏（だいたい4月〜7月）に高校を通して申し込む仕組みです。2027年4月入学なら、今（2026年10月末）は通常の受付が終わっている可能性が高いです",
+        trap:"ここが今いちばん急ぎます。予約採用に間に合わないと、進学後の「在学採用」になり、お金が振り込まれるのが1回生の夏ごろまでずれ込みます。つまり入学直後のいちばんお金がかかる時期に奨学金がありません。間に合うかどうかで資金計画が変わるので、今週中に高校の事務室で確認してください"
+      } },
+    { id:"e11", type:"money", q:"自分の貯金・入学祝いで出せる額は？", unit:"円 / 合計", optional:true,
+      hint:"初期費用に充てられる分です。" },
+    { id:"e12", type:"money", q:"親が出してもいいと言っている額（分かれば）", unit:"円 / 月", optional:true,
+      hint:"分からなければ空欄でOK。ここが分かっていると、交渉ではなく調整の話にできます。" }
+  ]
+},
+{
+  id:"f", title:"親との約束", field:"シラバスの 成績評価の方法",
+  lead:"この資料で一番の武器になるところです。親から出された条件は「管理」、自分から出した条件は「約束」になります。同じ内容でも、どちらから言うかで意味が変わります。",
+  qs:[
+    { id:"f1", type:"long", rows:4, deep:30, num:true,
+      q:"成績について、自分から出せる基準は何ですか？",
+      hint:"必ず数字を入れてください。「ちゃんとやる」は基準になりません。\n例：GPA3.0以上を各学期で維持する／1回生で単位を40以上取る",
+      research:{
+        what:"自分の学部でのGPAの意味と、現実的な目標値",
+        where:[{t:"立命館大学の成績評価・GPAの説明ページ", u:"https://www.ritsumei.ac.jp/"}],
+        check:"GPAは4.0が満点。3.0は「上位層」、2.0前後が平均的なライン。1回生で取れる単位は年40〜44単位が上限のことが多いです",
+        trap:"高すぎる基準を置くと、1年目で自分の首を絞めます。守れる数字にして、そのかわり確認のタイミングを細かくする方が、結果的に信用されます"
+      } },
+    { id:"f2", type:"long", rows:4, deep:25, num:true,
+      q:"お金について、どう報告しますか？",
+      hint:"いつ・何を・どうやって。日付を入れてください。\n例：毎月25日に、家計簿アプリの画面をLINEで送る" },
+    { id:"f3", type:"long", rows:3,
+      q:"生活について、他に約束できることは？",
+      hint:"例：月1回は帰省する／週2回は連絡する／体調を崩したらすぐ言う" },
+    { id:"f4", type:"long", rows:4, deep:25,
+      q:"もし約束が守れなかったら、どうしますか？",
+      hint:"ここが空だと、親は頭の中で最悪のケースを勝手に想像します。自分から決めておくこと。\n例：GPAが2回続けて基準を下回ったら、2回生の終わりに実家に戻る" }
+  ]
+},
+{
+  id:"g", title:"親の心配", field:"シラバスの 履修上の注意",
+  lead:"反対の理由は、たいてい口に出していることと違います。本当の理由に答えていない資料は、どれだけよくできていても通りません。",
+  qs:[
+    { id:"g1", type:"long", rows:4,
+      q:"親は今、一人暮らしについて何と言っていますか？",
+      hint:"お父さんとお母さんで反応が違うなら、分けて書いてください。実際に言われた言葉のまま書くのがいいです。" },
+    { id:"g2", type:"long", rows:4, deep:40,
+      q:"反対している本当の理由は何だと思いますか？",
+      hint:"お金／安全／生活できるか／寂しい／世間体／兄弟とのバランス。口に出していないものほど大事です。" },
+    { id:"g3", type:"long", rows:4,
+      q:"今、家事はどれくらいできますか？",
+      hint:"料理・洗濯・掃除・お金の管理。できないものはできないと書いてください。そのうえで「今から練習する」と書く方が、できるフリをするより何倍も効きます。" },
+    { id:"g4", type:"long", rows:3,
+      q:"住む部屋の条件で、親が安心しそうなものはありますか？",
+      hint:"例：オートロック、2階以上、駅から徒歩10分以内、大学まで歩ける距離、管理会社が生協経由" }
+  ]
+},
+{
+  id:"h", title:"話す場をつくる", field:"シラバスの スケジュール",
+  lead:"資料ができても、話す場がないと終わりません。",
+  qs:[
+    { id:"h1", type:"long", rows:3,
+      q:"親とちゃんと話す時間を取れそうな日は？（12月中旬までで2〜3個）",
+      hint:"機嫌のいい時間帯、二人そろっている日。テレビがついていない時間がいいです。" },
+    { id:"h2", type:"long", rows:3,
+      q:"先に話すなら、お父さんとお母さんのどちらですか？それはなぜ？",
+      hint:"味方を1人作ってから二人に話す方が通りやすいこともあります。" }
+  ]
+}
+];
+</script>
+<script>
+"use strict";
+/* ---------------- 状態 ---------------- */
+let S = {};
+try { S = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ S = {}; }
+let step = Number(S.__step) || 0;
+const TOTAL = SECTIONS.length + 2;          // 0=はじめに, 1..n=各章, n+1=結果
+
+const save = () => { try { S.__step = step; localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} };
+const g  = k => (S[k] ?? "");
+const gn = k => { const v = parseFloat(String(S[k]).replace(/[^\d.-]/g,"")); return isNaN(v) ? 0 : v; };
+const has = k => String(g(k)).trim().length > 0;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const toast = m => { const t = document.getElementById("toast"); t.textContent = m; t.classList.add("show");
+  clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove("show"), 1900); };
+
+/* ---------------- 計算 ---------------- */
+function calc(){
+  const teiki = gn("b1.teiki");
+  const addMonthly = gn("e3") + gn("e5") + gn("e6") + gn("e7") - gn("e8") - teiki;
+  const init = gn("e4");
+  const total4 = addMonthly * 48 + init;
+  const baito = gn("e9") * 46;              // 4年48か月のうち46か月稼働で見積もる
+  const scholar = gn("e10") * 48;
+  const chokin = gn("e11");
+  const oya = gn("e12") * 48;
+  const mine = baito + scholar + chokin;
+  const gap = total4 - mine - oya;
+  const tuition = gn("e1") * 4 + 200000 + gn("e2");   // 授業料×4＋入学金＋諸会費
+  return { teiki, addMonthly, init, total4, baito, scholar, chokin, oya, mine, gap, tuition };
+}
+
+/* ---------------- アクション導出 ---------------- */
+function actions(){
+  const A = [], c = calc();
+  const add = (prio, who, t, w) => A.push({prio, who, t, w});
+  const short = (k, n) => { const q = findQ(k); return String(g(k)).trim().length < (n || (q && q.deep) || 40); };
+
+  /* 締切があるもの＝最優先 */
+  if (!has("e10.src")) add("now","本人",
+    "高校の事務室で、奨学金の予約採用がまだ申し込めるか確認する",
+    "JASSOの予約採用は高校3年の春〜夏に高校経由で申し込む仕組みで、2027年4月入学ぶんは通常の受付が終わっている可能性が高い（今日は2026年10月27日）。間に合わないと進学後の在学採用になり、振込が1回生の夏ごろまでずれる。入学直後の一番お金がかかる時期に奨学金がない、という状態になるので、資金計画の前提が変わる。これだけは今週中に。");
+  if (gn("a1") > 0 && gn("a1") <= 6) add("now","SKと一緒に",
+    "シラバスを作る前に、一度SKと話す",
+    "本気度が" + gn("a1") + "点。ここが固まっていない状態で資料を作っても、親の前で崩れる。迷いの中身を先に整理する。");
+
+  /* 情報の精度 */
+  const numq = [
+    ["e1","学費（授業料の年額）","公式の学費ページで、進学する学科の2027年度の授業料を確認する。〈授業料×4＋入学金20万円〉が4年の学費。1回生の年間計を4倍しないこと"],
+    ["b1.teiki","定期代","Yahoo!乗換案内などで6か月定期を出し、月あたりに割る。実家から通う場合にかかる額なので、差額の計算で必ず使う"],
+    ["e3","家賃","SUUMOで南茨木・茨木市駅の1K/1Rを10件見て、管理費込みの合計で相場をつかむ。ニフティ不動産の集計では茨木市駅周辺の1Kが平均5.5万円（2026年8月時点）"],
+    ["e4","初期費用","気になった物件1件で内訳を出す。家賃の4〜6か月分＋家具家電10〜15万円が目安"]
+  ];
+  numq.forEach(([k, name, how]) => {
+    const base = k.split(".")[0];
+    if (!has(k)) add("wk","本人", name + "を調べて数字を入れる", how);
+    else if (!has(base + ".src") && (k==="e1"||k==="e3"||k==="e4"||k==="b1.teiki"))
+      add("wk","本人", name + "の出典を記録する",
+        "数字は入っているが、どこで見た数字かが空欄。親に「それどこの数字？」と聞かれて答えられないと、他の数字も全部疑われる。URLか、見たサイト名と確認した日付を書いておく。");
+  });
+  if (!has("b1.min")) add("wk","本人","通学の片道時間を調べる",
+    "Googleマップで平日8時着で検索。家から駅まで、駅から教室までを足した「ドア・トゥ・ドア」の分数にする。電車に乗っている時間だけだと15〜25分短く出て、親に一発で見抜かれる。");
+
+  /* 想いの深さ */
+  const core = [["a2","一人暮らしの1日"],["a3","きっかけになった出来事"],["a4","実家から通うともったいないこと"],
+    ["a6","4年後に言われたい言葉"],["c4","卒業するときの姿"],["d1","1回生でやること"]];
+  const blank = core.filter(([k])=>!has(k)).map(([,n])=>n);
+  const thin  = core.filter(([k])=>has(k) && short(k)).map(([,n])=>n);
+  if (blank.length) add("wk","本人", blank.join("／") + " を書く",
+    "ここが空だと、シラバスの該当欄がそもそも作れない。全部で" + blank.length + "か所。");
+  if (thin.length) add("wk","本人", thin.join("／") + " を、もう一段くわしく書く",
+    "いま書いてある量だと、シラバスの文章にしたとき一行で終わってしまう。具体的な場面・固有名詞・時期のどれかを足す。親は、量ではなく具体さで本気度をはかる。");
+  if (!has("a5")) add("wk","SKと一緒に","「一人暮らしをやめておいた方がいい理由」を自分で挙げる",
+    "親が言ってくることを先に自分で言えると、話の主導権がこちらに来る。面談で一緒に洗い出す。");
+
+  /* 約束の具体性 */
+  if (has("f1") && !/[0-9０-９]/.test(g("f1"))) add("wk","本人","成績の約束に数字を入れる",
+    "いまの書き方には数字がない。「GPA3.0以上を各学期で維持する」のように、基準・測り方・タイミングがそろって初めて評価の基準になる。");
+  if (!has("f1")) add("wk","本人","成績の約束を決める","この資料で一番の武器になる欄。自分から出すから意味がある。");
+  if (has("f2") && !/[0-9０-９]/.test(g("f2"))) add("wk","本人","お金の報告に日付を入れる",
+    "「毎月報告する」だけだと実行されない。「毎月25日に家計簿アプリの画面をLINEで送る」まで決める。");
+  if (!has("f4")) add("wk","本人","約束を守れなかったときの対応を決める",
+    "ここが空だと、親は頭の中で最悪のケースを勝手に埋める。自分から条件を出しておくと、親は安心してOKを出しやすくなる。");
+  if (!has("g2")) add("wk","本人","親が反対している本当の理由を見きわめる",
+    "口に出している理由と本当の理由はたいてい違う。分からなければ、面談までに親の言い方を観察するか、それとなく聞いてみる。ここに答えていない資料は通らない。");
+  add("wk","本人","今日から練習する家事を1つ決めて、面談の日まで続ける",
+    "「できます」と言うより、「◯月◯日から毎日やっています」と言える方が強い。料理でも洗濯でもいい。1つでいい。");
+
+  /* 書きすぎ */
+  if (String(g("d2")).length > 300) add("wk","本人","2回生以降の計画を短くする",
+    "高校生の段階で4年分を細かく決めるのは無理がある。1回生だけ具体的にして、あとは方向性にとどめる方が正直に見えて、結果的に信用される。");
+
+  /* 計算の整合 */
+  if (gn("e9") >= 80000) add("wk","本人","バイトの金額と、成績の約束が両立するか考え直す",
+    "月" + man(gn("e9")) + "は、週4〜5日のシフトが必要な水準。成績の約束と並べると、親は必ずそこを突く。金額を下げるか、シフトの上限（週◯日まで）を一緒に書く。");
+  if (c.addMonthly > 0 && c.gap > 0) add("wk","本人","足りない分をどうするか決める",
+    "いまの数字だと、4年間で" + man(c.gap) + "足りない。親にお願いする額としてはっきり書くか、バイト・奨学金・住む部屋のどれかを見直す。「足りないけど何とかする」が一番通らない。");
+  if (c.addMonthly > 0 && c.gap <= 0) add("lt","本人","差額が自分の負担でまかなえている。その計算を口で説明できるようにする",
+    "資料に書いてあるだけでは足りない。「月◯円増えて、4年で◯円。バイトで◯円、奨学金で◯円、貯金で◯円」と、見ないで言えるようにしておく。");
+  if (!has("e6") || !has("e5")) add("wk","本人","食費と水道光熱費の見込みを入れる",
+    "全国大学生協連の実態調査が使える。自炊中心なら食費は月2.5〜3万円、光熱費は月7,000〜12,000円が目安。低く見積もると「本当にできるの」で全部崩れる。");
+
+  /* 仕上げ */
+  if (!has("c3")) add("lt","本人","気になる授業・ゼミ・プログラムの名前を3つ調べる",
+    "固有名詞が入ると、親の見る目が変わる。うち1つは1回生で取れるものにする。");
+  if (!has("h1")) add("lt","本人","親と話す日の候補を2〜3個出す","資料ができても、話す場がないと終わらない。");
+  add("lt","本人","物件を1件、実際に見に行く（または生協に相談する）",
+    "相場と初期費用が一気に現実になる。親を一緒に連れていけるなら、それが一番早い。");
+  add("lt","SKと一緒に","できあがったシラバスをSKに見せて、親役でリハーサルをする",
+    "見るのは5点：概要に差額が書いてあるか／学費と一人暮らしの費用が分けてあるか／約束が数字になっているか／親の反対理由すべてに答えがあるか／2回生以降を書きすぎていないか。");
+  return A;
+}
+function findQ(k){ const base = k.split(".")[0];
+  for (const s of SECTIONS) for (const q of s.qs) if (q.id === base) return q; return null; }
+</script>
+<script>
+"use strict";
+/* ---------------- シラバス下書き ---------------- */
+function syllabus(){
+  const c = calc(), L = [];
+  const v = k => has(k) ? String(g(k)).trim() : "〔未記入〕";
+  L.push("# シラバス：茨木での一人暮らしと大学4年間");
+  L.push("");
+  L.push("〔名前〕　2027年4月〜2031年3月");
+  L.push("");
+  L.push("## 1. 概要");
+  L.push("");
+  L.push("大学入学と同時に、大阪いばらきキャンパスの近くで一人暮らしをしたいと考えています。");
+  L.push("");
+  if (has("a3")) { L.push("きっかけは、こういうことでした。"); L.push(""); L.push(v("a3")); L.push(""); }
+  if (has("a4")) { L.push("実家から通う場合に、一番もったいないと感じているのは次の点です。"); L.push(""); L.push(v("a4")); L.push(""); }
+  if (c.total4 > 0) L.push("一人暮らしで増える費用は**4年間で約" + man(c.total4) + "**です。そのうち約"
+    + man(c.mine) + "は、バイト・奨学金・自分の貯金で負担します"
+    + (c.gap > 0 ? "。残りの約" + man(c.gap) + "をお願いしたいと考えています" : "") + "（詳しくは「5. 費用」）。");
+  L.push("");
+  L.push("## 2. 目的");
+  L.push("");
+  if (has("b1.min")) { const m = gn("b1.min");
+    L.push("実家から大阪いばらきキャンパスまでは片道" + m + "分かかり、4年間で通学に約"
+      + Math.round(m*2*5*30*4/60).toLocaleString("ja-JP") + "時間を使うことになります（往復×週5日×年30週×4年）。"); L.push(""); }
+  L.push(v("b2"));
+  L.push("");
+  L.push("この時間と環境を、大学での学びと、下の「3. 到達目標」に書いたことに使いたいと考えています。");
+  L.push("");
+  L.push("## 3. 到達目標");
+  L.push("");
+  L.push(v("c1") + "に進学します。この学部を選んだのは、" + v("c2"));
+  L.push("");
+  L.push("卒業するとき（2031年3月）には、次の状態になっていることを目指します。");
+  L.push("");
+  L.push("1. " + v("c4"));
+  L.push("2. " + v("a6"));
+  L.push("3. 生活とお金を自分で管理できるようになっている");
+  L.push("");
+  if (has("c3")) { L.push("特に関心があるのは次の授業・プログラムです。"); L.push(""); L.push(v("c3")); L.push(""); }
+  L.push("## 4. 授業計画");
+  L.push("");
+  L.push("| 時期 | 内容 |");
+  L.push("|---|---|");
+  L.push("| 1回生 | " + v("d1").replace(/\n/g,"　") + " |");
+  L.push("| 2回生以降 | " + v("d2").replace(/\n/g,"　") + " |");
+  L.push("");
+  L.push("2回生以降の計画は、1回生の1年間で見えたことをふまえて見直し、そのつど報告します。");
+  L.push("");
+  L.push("## 5. 費用");
+  L.push("");
+  L.push("学費は、実家から通っても一人暮らしをしてもかかります。ここでは**一人暮らしで増える分**を分けて示します。");
+  L.push("");
+  if (gn("e1") > 0) { L.push("### 学費（実家から通っても同じ）"); L.push("");
+    L.push("| 項目 | 金額 |"); L.push("|---|---|");
+    L.push("| 授業料（年額） | " + yen(gn("e1")) + " |");
+    L.push("| 授業料 4年分 | " + yen(gn("e1")*4) + " |");
+    L.push("| 入学金 | " + yen(200000) + " |");
+    if (gn("e2")>0) L.push("| 諸会費 4年分 | " + yen(gn("e2")) + " |");
+    L.push("| **4年間の学費 合計** | **" + yen(c.tuition) + "** |"); L.push("");
+    L.push("出典：" + (has("e1.src") ? v("e1.src") : "〔出典を記入〕")); L.push(""); }
+  L.push("### 一人暮らしで増える分");
+  L.push("");
+  L.push("| 項目 | 実家から通う | 一人暮らし | 差額（月） |");
+  L.push("|---|---|---|---|");
+  L.push("| 家賃 | 0円 | " + yen(gn("e3")) + " | +" + yen(gn("e3")) + " |");
+  L.push("| 水道光熱費 | 0円 | " + yen(gn("e5")) + " | +" + yen(gn("e5")) + " |");
+  L.push("| 食費・通信費など | " + yen(gn("e8")) + " | " + yen(gn("e6")+gn("e7")) + " | +" + yen(gn("e6")+gn("e7")-gn("e8")) + " |");
+  L.push("| 通学定期代 | " + yen(c.teiki) + " | 0円 | −" + yen(c.teiki) + " |");
+  L.push("| **月の差額** | | | **+" + yen(c.addMonthly) + "** |");
+  L.push("");
+  L.push("| | 金額 |");
+  L.push("|---|---|");
+  L.push("| 月の差額 × 48か月 | " + yen(c.addMonthly*48) + " |");
+  L.push("| 初期費用（契約・家具家電） | " + yen(c.init) + " |");
+  L.push("| **4年間で増える額** | **" + yen(c.total4) + "** |");
+  L.push("");
+  L.push("### 増える分を、どう負担するか");
+  L.push("");
+  L.push("| 負担するもの | 金額（4年間） |");
+  L.push("|---|---|");
+  L.push("| バイト（月" + yen(gn("e9")) + " × 46か月） | " + yen(c.baito) + " |");
+  L.push("| 奨学金（月" + yen(gn("e10")) + "） | " + yen(c.scholar) + " |");
+  L.push("| 自分の貯金・入学祝い | " + yen(c.chokin) + " |");
+  L.push("| **自分で負担する合計** | **" + yen(c.mine) + "** |");
+  L.push("| お願いしたい金額 | " + (c.gap>0 ? yen(c.gap) : "0円") + " |");
+  L.push("");
+  L.push("## 6. 成績評価の方法");
+  L.push("");
+  L.push("一人暮らしがうまくいっているかを、次の基準で確認してもらいます。");
+  L.push("");
+  L.push("| 基準 | 確認のタイミング |");
+  L.push("|---|---|");
+  L.push("| " + v("f1").replace(/\n/g,"　") + " | 各学期の成績発表後 |");
+  L.push("| " + v("f2").replace(/\n/g,"　") + " | 毎月 |");
+  if (has("f3")) L.push("| " + v("f3").replace(/\n/g,"　") + " | 随時 |");
+  L.push("");
+  L.push("**守れなかったときは：** " + v("f4"));
+  L.push("");
+  L.push("1回生の終わり（2028年3月）に、一人暮らしを続けるかを一緒に見直します。");
+  L.push("");
+  L.push("## 7. 履修上の注意（心配されていることへの答え）");
+  L.push("");
+  L.push("| 心配なこと | 対応 |");
+  L.push("|---|---|");
+  L.push("| お金 | 上の「5. 費用」のとおり。毎月報告します |");
+  L.push("| 生活できるか | " + v("g3").replace(/\n/g,"　") + " |");
+  L.push("| 安全 | " + v("g4").replace(/\n/g,"　") + " |");
+  if (has("g2")) L.push("| " + v("g2").replace(/\n/g,"　").slice(0,40) + " | 〔ここに答えを書く〕 |");
+  L.push("");
+  L.push("## 8. スケジュール");
+  L.push("");
+  L.push("| 時期 | やること |");
+  L.push("|---|---|");
+  L.push("| " + (has("h1") ? v("h1").split("\n")[0] : "〔日程〕") + " | このシラバスで説明 |");
+  L.push("| 2026年12月〜2027年1月 | 物件の条件を決める、予算の確定 |");
+  L.push("| 2027年1月〜3月 | 物件探し・契約（大学生協の住まい紹介も利用） |");
+  L.push("| 2027年3月 | 引っ越し、生活用品の準備 |");
+  L.push("| 2027年4月 | 入学・一人暮らしスタート |");
+  L.push("");
+  return L.join("\n");
+}
+
+/* ---------------- 描画 ---------------- */
+const app = document.getElementById("app");
+
+function qHTML(q){
+  const o = [];
+  o.push('<div class="q" id="q-'+q.id+'">');
+  o.push('<div class="q-text">'+esc(q.q)+(q.optional?'<span style="font-weight:400;color:var(--muted);font-size:13px"> （任意）</span>':'')+'</div>');
+  if (q.hint) o.push('<div class="q-hint">'+esc(q.hint)+'</div>');
+
+  if (q.type === "scale"){
+    o.push('<div class="scale" data-scale="'+q.id+'">');
+    for (let i=1;i<=10;i++) o.push('<button type="button" data-v="'+i+'" aria-pressed="'+(gn(q.id)===i)+'">'+i+'</button>');
+    o.push('</div><div class="scale-ends"><span>1　まあ住めたらいいな</span><span>10　絶対にやりたい</span></div>');
+  } else if (q.type === "group"){
+    o.push('<div class="sub">');
+    q.fields.forEach(f => { const k = q.id+"."+f.k;
+      o.push('<label><span>'+esc(f.label)+'</span><input type="'+(f.num?"number":"text")+'" data-k="'+k+'" value="'+esc(g(k))+'" placeholder="'+esc(f.ph||"")+'"></label>'); });
+    o.push('</div>');
+  } else if (q.type === "money"){
+    o.push('<div class="money"><input type="number" inputmode="numeric" data-k="'+q.id+'" value="'+esc(g(q.id))+'" placeholder="0"><span class="unit">'+esc(q.unit||"円")+'</span></div>');
+    if (q.id === "e1"){
+      const t = TUITION[String(g("c1")).trim()];
+      if (t) o.push('<div style="margin-top:8px"><button type="button" class="btn sm ghost" data-fill="'+t.year+'">確認済みの額（'+yen(t.year)+'）を入れる</button></div>');
+    }
+  } else if (q.type === "short"){
+    o.push('<input type="text" data-k="'+q.id+'" value="'+esc(g(q.id))+'" placeholder="'+esc(q.ph||"")+'">');
+  } else {
+    o.push('<textarea data-k="'+q.id+'" rows="'+(q.rows||4)+'" placeholder="'+esc(q.ph||"")+'">'+esc(g(q.id))+'</textarea>');
+    if (q.deep) o.push('<div class="count" data-count="'+q.id+'"></div>');
+  }
+
+  if (q.src){
+    o.push('<div class="srcline">'
+      +'<input type="text" data-k="'+q.id+'.src" value="'+esc(g(q.id+".src"))+'" placeholder="出典（URL・サイト名・誰に聞いたか）">'
+      +'<input type="text" data-k="'+q.id+'.date" value="'+esc(g(q.id+".date"))+'" placeholder="確認した日">'
+      +'</div>');
+  }
+  if (q.research){
+    const r = q.research;
+    o.push('<div class="res"><div class="rh">調べ方</div><dl>');
+    o.push('<dt>取る数字</dt><dd>'+esc(r.what)+'</dd>');
+    o.push('<dt>どこで</dt><dd>'+r.where.map(w => w.u
+      ? '<a href="'+w.u+'" target="_blank" rel="noopener">'+esc(w.t)+'</a>' : esc(w.t)).join('<br>')+'</dd>');
+    if (r.check) o.push('<dt>目安・検算</dt><dd>'+esc(r.check)+'</dd>');
+    o.push('</dl>');
+    if (r.trap) o.push('<div class="trap"><b>よくある間違い：</b>'+esc(r.trap)+'</div>');
+    o.push('</div>');
+  }
+  o.push('</div>');
+  return o.join("");
+}
+
+function render(){
+  window.scrollTo(0,0);
+  const bar = document.getElementById("bar");
+  bar.style.width = Math.round(step/(TOTAL-1)*100) + "%";
+  document.getElementById("stepLabel").textContent =
+    step === 0 ? "" : (step === TOTAL-1 ? "まとめ" : step + " / " + SECTIONS.length);
+
+  if (step === 0){ app.innerHTML = introHTML(); }
+  else if (step === TOTAL-1){ app.innerHTML = resultHTML(); }
+  else {
+    const s = SECTIONS[step-1];
+    app.innerHTML = '<section class="card">'
+      + '<span class="tag">'+esc(s.field)+'</span>'
+      + '<h2>'+esc(s.title)+'</h2>'
+      + '<p class="lead">'+esc(s.lead)+'</p><hr>'
+      + s.qs.map(qHTML).join("")
+      + '</section>' + navHTML();
+  }
+  wire();
+}
+
+function navHTML(){
+  return '<div class="nav">'
+    + (step>0 ? '<button class="btn ghost" data-go="'+(step-1)+'">もどる</button>' : '')
+    + '<span class="spacer"></span>'
+    + '<button class="btn" data-go="'+(step+1)+'">'+(step===SECTIONS.length ? "結果を見る" : "次へ")+'</button>'
+    + '</div><p class="save-note">入力は自動でこの端末に保存されます。どこで中断しても続きから再開できます。</p>';
+}
+</script>
+<script>
+"use strict";
+function introHTML(){
+  const done = SECTIONS.reduce((n,s)=>n+s.qs.filter(q=>has(q.id)||has(q.id+".min")||has(q.id+".eki")).length,0);
+  return '<section class="card">'
+  + '<span class="tag">親を説得するための下ごしらえ</span>'
+  + '<h1>答えていくと、親に見せるシラバスの下書きと、次にやることが出てきます</h1>'
+  + '<p class="lead">一人暮らしを認めてもらうための資料を、大学のシラバス（授業の設計書）の形で作ります。'
+  + '「お願い」ではなく「4年間をこう設計した」という見せ方にするためです。</p>'
+  + '<h3>進め方</h3>'
+  + '<ul class="plain">'
+  + '<li><b>前半は、気持ちの話。</b>ここは調べても出てきません。本人にしか書けないところです</li>'
+  + '<li><b>後半は、数字の話。</b>どこで何を調べるかが各問題の下に書いてあります。推測で埋めないでください</li>'
+  + '<li>全部で8章・37問（うち9問は任意）。一気にやらなくていいです。入力は自動で保存されます</li>'
+  + '</ul>'
+  + '<h3>ひとつだけ先に</h3>'
+  + '<div class="flag"><b>奨学金の締切が、もう過ぎているかもしれません</b>'
+  + 'JASSOの予約採用は高校3年の春から夏に、高校を通して申し込みます。2027年4月入学ぶんは、今（2026年10月末）だと通常の受付が終わっている可能性があります。'
+  + '間に合わないと振込が1回生の夏ごろになり、入学直後のいちばんお金がかかる時期に奨学金がありません。'
+  + '<b style="margin-top:6px">今週中に、高校の事務室で確認してください。</b>これで費用計画の前提が変わります。</div>'
+  + '<p class="lead" style="margin-top:18px">答えはこの端末のブラウザの中だけに保存されます。どこにも送信されません。'
+  + '最後に「コピー」ボタンでまとめて書き出せるので、それをSKに送ってください。</p>'
+  + (done>0 ? '<div class="flag ok"><b>前回の続きがあります</b>'+done+'問ぶんの答えが残っています。</div>' : '')
+  + '<div class="nav"><button class="btn" data-go="1">'+(done>0?'続きから始める':'はじめる')+'</button>'
+  + (done>0 ? '<span class="spacer"></span><button class="btn ghost sm" data-go="'+(TOTAL-1)+'">結果を見る</button>' : '')
+  + '</div></section>';
+}
+
+function resultHTML(){
+  const c = calc(), A = actions(), o = [];
+  const grp = p => A.filter(a=>a.prio===p);
+  const label = {now:"今週中", wk:"面談まで", lt:"そのあと"};
+
+  /* 想いのまとめ */
+  o.push('<section class="card"><span class="tag">あなたが書いたこと</span><h2>この資料の芯になる部分</h2>');
+  o.push('<p class="lead">シラバスの文章は、ここから作ります。読み返して、これが自分の本当の言葉になっているか確かめてください。</p>');
+  [["a1b","一人暮らしをしたい気持ちの中身"],["a3","きっかけ"],["a4","実家から通うともったいないこと"],["a6","4年後に言われたい言葉"]]
+    .forEach(([k,t])=>{ if(has(k)) o.push('<div class="echo"><b>'+esc(t)+'</b>'+esc(g(k))+'</div>'); });
+  if (!has("a1b") && !has("a3")) o.push('<div class="flag"><b>まだ空欄です</b>第1章「想いのたしかめ」を埋めないと、シラバスの中心ができません。</div>');
+  o.push('</section>');
+
+  /* 費用の検算 */
+  o.push('<section class="card"><span class="tag">数字の検算</span><h2>いまの数字だと、こうなります</h2>');
+  if (c.addMonthly === 0 && c.init === 0){
+    o.push('<div class="flag"><b>費用がまだ入っていません</b>第5章「お金のこと」を埋めると、ここに4年間の差額と不足額が出ます。</div>');
+  } else {
+    o.push('<table class="calc"><tbody>');
+    o.push('<tr><td>家賃（月）</td><td class="n">'+yen(gn("e3"))+'</td></tr>');
+    o.push('<tr><td>水道光熱・食費・通信（月）</td><td class="n">'+yen(gn("e5")+gn("e6")+gn("e7"))+'</td></tr>');
+    if (gn("e8")>0) o.push('<tr class="sub"><td>実家にいてもかかっていた分（引く）</td><td class="n">−'+yen(gn("e8"))+'</td></tr>');
+    if (c.teiki>0)  o.push('<tr class="sub"><td>通学定期代が浮く分（引く）</td><td class="n">−'+yen(c.teiki)+'</td></tr>');
+    o.push('<tr><td><b>月に増える額</b></td><td class="n"><b>'+yen(c.addMonthly)+'</b></td></tr>');
+    o.push('<tr class="sub"><td>× 48か月</td><td class="n">'+yen(c.addMonthly*48)+'</td></tr>');
+    o.push('<tr class="sub"><td>＋ 初期費用</td><td class="n">'+yen(c.init)+'</td></tr>');
+    o.push('<tr class="total"><td>4年間で増える額</td><td class="n">'+yen(c.total4)+'</td></tr>');
+    o.push('</tbody></table>');
+    o.push('<table class="calc"><tbody>');
+    o.push('<tr><td>バイト（月'+yen(gn("e9"))+' × 46か月）</td><td class="n">'+yen(c.baito)+'</td></tr>');
+    o.push('<tr><td>奨学金（月'+yen(gn("e10"))+' × 48か月）</td><td class="n">'+yen(c.scholar)+'</td></tr>');
+    o.push('<tr><td>貯金・入学祝い</td><td class="n">'+yen(c.chokin)+'</td></tr>');
+    o.push('<tr class="total"><td>自分で出せる額</td><td class="n">'+yen(c.mine)+'</td></tr>');
+    o.push('</tbody></table>');
+    if (c.gap > 0) o.push('<div class="flag"><b>4年間で '+man(c.gap)+' 足りません</b>'
+      + 'これを親にお願いする額として書くか、バイト・奨学金・家賃のどれかを見直します。'
+      + '月あたりにすると約'+yen(c.gap/48)+'です。この数字を自分の口で説明できるようにしてください。</div>');
+    else o.push('<div class="flag ok"><b>自分の負担でまかなえる計算になっています</b>'
+      + 'ただし、計算どおりに進む前提です。バイトが減ったときどうするかまで言えると、さらに強くなります。</div>');
+    if (c.tuition > 0) o.push('<p class="lead">参考：4年間の学費は '+yen(c.tuition)
+      +'（授業料'+yen(gn("e1"))+'×4＋入学金200,000円'+(gn("e2")>0?'＋諸会費'+yen(gn("e2")):'')
+      +'）。これは実家から通っても同じなので、判断材料には入れません。</p>');
+  }
+  /* 精度チェック */
+  const srcs = [["e1","学費"],["e3","家賃"],["e4","初期費用"],["b1","定期代・通学時間"]];
+  const miss = srcs.filter(([k])=>!has(k+".src"));
+  o.push('<h3>出典がついているか</h3>');
+  o.push('<p class="lead">親に「それどこの数字？」と聞かれて答えられない数字が1つでもあると、資料全体が疑われます。</p>');
+  o.push('<table class="calc"><tbody>'+srcs.map(([k,t])=>'<tr><td>'+esc(t)+'</td><td class="n">'
+    +(has(k+".src") ? '<span style="color:var(--ok)">記録あり</span>' : '<span style="color:var(--warm)">未記入</span>')+'</td></tr>').join("")+'</tbody></table>');
+  o.push('</section>');
+
+  /* アクション */
+  o.push('<section class="card"><span class="tag warm">ここからやること</span><h2>次にやること（'+A.length+'件）</h2>');
+  o.push('<p class="lead">上から順に。締切があるものを先に置いています。チェックは保存されます。</p>');
+  ["now","wk","lt"].forEach(p => { const list = grp(p); if(!list.length) return;
+    o.push('<h3><span class="prio '+p+'">'+label[p]+'</span></h3>');
+    list.forEach((a,i)=>{ const key = "__act."+p+"."+i;
+      o.push('<div class="action'+(g(key)?' done':'')+'">'
+        +'<input type="checkbox" data-k="'+key+'"'+(g(key)?' checked':'')+'>'
+        +'<div class="body"><div class="t">'+esc(a.t)+'<span class="who '+(a.who==="本人"?"me":"sk")+'">'+esc(a.who)+'</span></div>'
+        +'<div class="w">'+esc(a.w)+'</div></div></div>'); });
+  });
+  o.push('</section>');
+
+  /* 出力 */
+  o.push('<section class="card"><span class="tag">書き出す</span><h2>シラバスの下書き</h2>');
+  o.push('<p class="lead">いまの答えから作った下書きです。〔未記入〕が残っているところが、まだ埋まっていない欄です。</p>');
+  o.push('<pre class="out" id="syl">'+esc(syllabus())+'</pre>');
+  o.push('<div class="row"><button class="btn sm" data-copy="syl">下書きをコピー</button>'
+    +'<button class="btn sm ghost" data-dl="syllabus">ファイルで保存</button></div>');
+  o.push('<h3>答えぜんぶ（SKに送る用）</h3>');
+  o.push('<pre class="out" id="raw">'+esc(dump())+'</pre>');
+  o.push('<div class="row"><button class="btn sm" data-copy="raw">答えをコピー</button>'
+    +'<button class="btn sm ghost" data-dl="answers">ファイルで保存</button>'
+    +'<button class="btn sm ghost" data-reset="1">ぜんぶ消す</button></div>');
+  o.push('</section>');
+  o.push('<div class="nav"><button class="btn ghost" data-go="'+(TOTAL-2)+'">もどる</button>'
+    +'<span class="spacer"></span><button class="btn ghost sm" data-go="1">最初から見直す</button></div>');
+  return o.join("");
+}
+
+function dump(){
+  const L = ["# ヒアリングの答え", ""];
+  SECTIONS.forEach(s => { L.push("## " + s.title); L.push("");
+    s.qs.forEach(q => {
+      let val;
+      if (q.type === "group") val = q.fields.map(f => f.label + "：" + (g(q.id+"."+f.k) || "—")).join(" / ");
+      else if (q.type === "money") val = has(q.id) ? yen(gn(q.id)) + " " + (q.unit||"") : "—";
+      else val = has(q.id) ? g(q.id) : "—";
+      L.push("**" + q.q + "**"); L.push(String(val)); 
+      if (q.src && (has(q.id+".src")||has(q.id+".date"))) L.push("出典：" + g(q.id+".src") + "（" + (g(q.id+".date")||"日付未記入") + "）");
+      L.push("");
+    });
+  });
+  const c = calc();
+  L.push("## 計算"); L.push("");
+  L.push("- 月に増える額：" + yen(c.addMonthly));
+  L.push("- 4年間で増える額：" + yen(c.total4));
+  L.push("- 自分で出せる額：" + yen(c.mine));
+  L.push("- 足りない額：" + yen(c.gap));
+  L.push("");
+  L.push("## 次にやること"); L.push("");
+  actions().forEach(a => L.push("- [" + ({now:"今週中",wk:"面談まで",lt:"そのあと"})[a.prio] + "/" + a.who + "] " + a.t));
+  return L.join("\n");
+}
+
+/* ---------------- 入力の配線 ---------------- */
+function wire(){
+  app.querySelectorAll("[data-k]").forEach(el => {
+    const k = el.dataset.k;
+    const h = () => { S[k] = (el.type === "checkbox") ? (el.checked ? 1 : "") : el.value; save();
+      if (el.type === "checkbox") el.closest(".action").classList.toggle("done", el.checked);
+      const cEl = app.querySelector('[data-count="'+k+'"]'); if (cEl) updCount(cEl, k);
+    };
+    el.addEventListener("input", h); el.addEventListener("change", h);
+  });
+  app.querySelectorAll("[data-count]").forEach(el => updCount(el, el.dataset.count));
+  app.querySelectorAll("[data-scale]").forEach(box => box.addEventListener("click", e => {
+    const b = e.target.closest("button[data-v]"); if (!b) return;
+    S[box.dataset.scale] = b.dataset.v; save();
+    box.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  }));
+  app.querySelectorAll("[data-fill]").forEach(b => b.addEventListener("click", () => {
+    const inp = app.querySelector('[data-k="e1"]'); inp.value = b.dataset.fill; S.e1 = b.dataset.fill;
+    const src = app.querySelector('[data-k="e1.src"]');
+    if (src && !src.value){ src.value = "立命館大学 学費・奨学金 " + FEE_URL; S["e1.src"] = src.value; }
+    const dt = app.querySelector('[data-k="e1.date"]');
+    if (dt && !dt.value){ dt.value = CHECKED_ON; S["e1.date"] = dt.value; }
+    save(); toast("入れました");
+  }));
+  app.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => {
+    step = Math.max(0, Math.min(TOTAL-1, Number(b.dataset.go))); save(); render(); }));
+  app.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => {
+    const t = document.getElementById(b.dataset.copy).textContent;
+    try { await navigator.clipboard.writeText(t); toast("コピーしました"); }
+    catch(e){ const r = document.createRange(); r.selectNodeContents(document.getElementById(b.dataset.copy));
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast("選択しました。長押しでコピー"); }
+  }));
+  app.querySelectorAll("[data-dl]").forEach(b => b.addEventListener("click", () => {
+    const name = b.dataset.dl;
+    const text = name === "syllabus" ? syllabus() : dump();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([text], {type:"text/markdown;charset=utf-8"}));
+    a.download = name + ".md"; a.click(); URL.revokeObjectURL(a.href); toast("保存しました");
+  }));
+  app.querySelectorAll("[data-reset]").forEach(b => b.addEventListener("click", () => {
+    if (b.dataset.armed){ localStorage.removeItem(KEY); S = {}; step = 0; render(); return; }
+    b.dataset.armed = "1"; b.textContent = "本当に消す？もう一度押す";
+  }));
+}
+function updCount(el, k){
+  const q = findQ(k), n = String(g(k)).trim().length, need = (q && q.deep) || 40;
+  if (n === 0){ el.textContent = ""; return; }
+  el.textContent = n + "文字";
+  el.classList.toggle("warn", n < need);
+  if (n < need) el.textContent = n + "文字 — もう少しくわしく（目安" + need + "文字）";
+}
+
+/* ---------------- テーマ ---------------- */
+const tBtn = document.getElementById("themeBtn");
+if (localStorage.getItem("theme")) document.documentElement.dataset.theme = localStorage.getItem("theme");
+tBtn.addEventListener("click", () => {
+  const cur = document.documentElement.dataset.theme
+    || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const next = cur === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next; localStorage.setItem("theme", next);
+});
+
+render();
+</script>
+</body>
+</html>
